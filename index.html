@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKPD Interaktif - SMP Negeri 2 Kota Sukabumi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .question-card { transition: all 0.3s ease; }
+        .question-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .radio-custom { appearance: none; width: 20px; height: 20px; border: 2px solid #3B82F6; border-radius: 50%; position: relative; cursor: pointer; }
+        .radio-custom:checked { background-color: #3B82F6; }
+        .radio-custom:checked::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .progress-bar { transition: width 0.3s ease; }
+        .nav-btn.active { border-bottom-color: white; background-color: rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <div class="bg-white shadow-lg border-b-4 border-blue-600">
+        <div class="max-w-6xl mx-auto px-6 py-6">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">ANGKET KEBUTUHAN PESERTA DIDIK</h1>
+                <h2 class="text-xl font-semibold text-blue-600 mb-1">SMP NEGERI 2 KOTA SUKABUMI</h2>
+                <p class="text-gray-600 font-medium">TAHUN AJARAN 2025/2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="bg-blue-600 shadow-md">
+        <div class="max-w-6xl mx-auto px-6">
+            <nav class="flex space-x-8 overflow-x-auto">
+                <button onclick="showSection('survey')" id="nav-survey" class="nav-btn text-white hover:text-blue-200 py-4 px-2 border-b-2 border-transparent hover:border-blue-200 transition-colors whitespace-nowrap font-medium">
+                    📝 Isi Angket
+                </button>
+                <button onclick="showSection('analysis')" id="nav-analysis" class="nav-btn text-white hover:text-blue-200 py-4 px-2 border-b-2 border-transparent hover:border-blue-200 transition-colors whitespace-nowrap font-medium">
+                    📊 Analisis Hasil
+                </button>
+                <button onclick="showSection('answer-sheet')" id="nav-answer-sheet" class="nav-btn text-white hover:text-blue-200 py-4 px-2 border-b-2 border-transparent hover:border-blue-200 transition-colors whitespace-nowrap font-medium">
+                    📋 Lembar Jawab
+                </button>
+                <button onclick="showSection('class-profile')" id="nav-class-profile" class="nav-btn text-white hover:text-blue-200 py-4 px-2 border-b-2 border-transparent hover:border-blue-200 transition-colors whitespace-nowrap font-medium">
+                    👥 Profil Kelas
+                </button>
+                <button onclick="showSection('counseling-profile')" id="nav-counseling-profile" class="nav-btn text-white hover:text-blue-200 py-4 px-2 border-b-2 border-transparent hover:border-blue-200 transition-colors whitespace-nowrap font-medium">
+                    🎯 Profil Konseling
+                </button>
+                <button onclick="showSection('reports')" id="nav-reports" class="nav-btn text-white hover:text-blue-200 py-4 px-2 border-b-2 border-transparent hover:border-blue-200 transition-colors whitespace-nowrap font-medium">
+                    📊 Laporan
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 py-8">
+        <!-- Survey Section -->
+        <div id="survey-section">
+        <!-- Class Selection -->
+        <div id="class-selection" class="bg-white rounded-xl shadow-lg p-8 mb-8 fade-in">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Pilih Tingkat Kelas</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div onclick="selectGrade(7)" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-8 rounded-xl cursor-pointer transition-all transform hover:scale-105 shadow-lg">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold mb-2">7</div>
+                        <div class="text-lg font-semibold mb-2">KELAS 7</div>
+                        <div class="text-sm opacity-90">7A - 7I</div>
+                    </div>
+                </div>
+                <div onclick="selectGrade(8)" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-8 rounded-xl cursor-pointer transition-all transform hover:scale-105 shadow-lg">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold mb-2">8</div>
+                        <div class="text-lg font-semibold mb-2">KELAS 8</div>
+                        <div class="text-sm opacity-90">8A - 8K</div>
+                    </div>
+                </div>
+                <div onclick="selectGrade(9)" class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-8 rounded-xl cursor-pointer transition-all transform hover:scale-105 shadow-lg">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold mb-2">9</div>
+                        <div class="text-lg font-semibold mb-2">KELAS 9</div>
+                        <div class="text-sm opacity-90">9A - 9J</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Identitas -->
+        <div id="identitas-section" class="bg-white rounded-xl shadow-lg p-8 mb-8 fade-in hidden">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Data Siswa</h3>
+                <button onclick="backToClassSelection()" class="text-blue-600 hover:text-blue-700 font-medium">
+                    ← Kembali
+                </button>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
+                    <input type="text" id="nama" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors" placeholder="Masukkan nama lengkap">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Kelas</label>
+                    <select id="kelas" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors">
+                        <option value="">Pilih Kelas</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="startSurvey()" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                Mulai Mengisi Angket
+            </button>
+        </div>
+
+        <!-- Petunjuk -->
+        <div id="petunjuk-section" class="bg-white rounded-xl shadow-lg p-8 mb-8 hidden">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Petunjuk Pengisian</h3>
+            <div class="space-y-4 text-gray-700">
+                <div class="flex items-start space-x-3">
+                    <span class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">1</span>
+                    <p>Dibawah ini bukan alat tes, tetapi angket yang berisi tentang berbagai masalah yang sering dihadapi siswa.</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <span class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">2</span>
+                    <p>Jawaban Anda sangat bermanfaat untuk membantu keberhasilan belajar di sekolah ini.</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <span class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">3</span>
+                    <p>Pilihlah jawaban yang paling sesuai dengan kondisi Anda saat ini, dengan cara memilih <strong>YA</strong> atau <strong>TIDAK</strong>.</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <span class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">4</span>
+                    <p>Jawaban Anda akan kami rahasiakan, untuk itu jawablah dengan sungguh-sungguh.</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <span class="bg-green-100 text-green-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">✓</span>
+                    <p class="font-semibold text-green-700">Selamat mengerjakan!</p>
+                </div>
+            </div>
+            <button onclick="showQuestions()" class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                Lanjut ke Pertanyaan
+            </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progress-section" class="bg-white rounded-xl shadow-lg p-6 mb-8 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-semibold text-gray-600">Progress Pengisian</span>
+                <span id="progress-text" class="text-sm font-semibold text-blue-600">0/50</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+                <div id="progress-bar" class="progress-bar bg-blue-600 h-3 rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Questions Section -->
+        <div id="questions-section" class="hidden">
+            <div id="questions-container"></div>
+            
+            <!-- Navigation -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mt-8">
+                <div class="flex justify-between items-center">
+                    <button id="prev-btn" onclick="previousQuestion()" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        ← Sebelumnya
+                    </button>
+                    <span id="question-counter" class="text-gray-600 font-medium">1 dari 50</span>
+                    <button id="next-btn" onclick="nextQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+                        Selanjutnya →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+                <div class="mb-6">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Angket Berhasil Diselesaikan!</h3>
+                    <p class="text-gray-600">Terima kasih telah mengisi angket dengan sungguh-sungguh.</p>
+                </div>
+                
+                <div id="summary" class="bg-gray-50 rounded-lg p-6 mb-6 text-left">
+                    <h4 class="font-semibold text-gray-800 mb-4">Ringkasan Jawaban:</h4>
+                    <div id="summary-content"></div>
+                </div>
+                
+                <div class="space-y-4">
+                    <button onclick="downloadResults()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        📄 Download Hasil
+                    </button>
+                    <button onclick="resetSurvey()" class="w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        🔄 Isi Ulang Angket
+                    </button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Analysis Section -->
+        <div id="analysis-section" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">📊 Analisis Hasil Pengisian Survey</h3>
+                
+                <!-- Filter Controls -->
+                <div class="grid md:grid-cols-3 gap-4 mb-6">
+                    <select id="analysis-grade" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                        <option value="">Pilih Tingkat Kelas</option>
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
+                    </select>
+                    <select id="analysis-class" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                        <option value="">Pilih Kelas Spesifik</option>
+                    </select>
+                    <button onclick="generateAnalysis()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                        Generate Analisis
+                    </button>
+                </div>
+
+                <!-- Analysis Results -->
+                <div id="analysis-results" class="hidden">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold mb-2">Total Responden</h4>
+                            <p id="total-respondents" class="text-3xl font-bold">0</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold mb-2">Rata-rata "YA"</h4>
+                            <p id="avg-yes" class="text-3xl font-bold">0%</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold mb-2">Masalah Tertinggi</h4>
+                            <p id="highest-problem" class="text-3xl font-bold">0%</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-xl">
+                            <h4 class="text-lg font-semibold mb-2">Perlu Bimbingan</h4>
+                            <p id="need-guidance" class="text-3xl font-bold">0</p>
+                        </div>
+                    </div>
+
+                    <!-- Chart Area -->
+                    <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Grafik Analisis Masalah</h4>
+                        <div id="chart-container" class="h-64 flex items-center justify-center text-gray-500">
+                            <p>Grafik akan ditampilkan di sini setelah analisis</p>
+                        </div>
+                    </div>
+
+                    <!-- Top Problems -->
+                    <div class="bg-red-50 border border-red-200 p-6 rounded-lg">
+                        <h4 class="text-lg font-semibold text-red-800 mb-4">🚨 Masalah yang Paling Sering Muncul</h4>
+                        <div id="top-problems" class="space-y-2">
+                            <!-- Problems will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Answer Sheet Section -->
+        <div id="answer-sheet-section" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">📋 Lembar Jawab AKPD</h3>
+                
+                <!-- Student Search -->
+                <div class="grid md:grid-cols-3 gap-4 mb-6">
+                    <input type="text" id="search-student" placeholder="Cari nama siswa..." class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                    <select id="filter-class" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                        <option value="">Semua Kelas</option>
+                    </select>
+                    <button onclick="searchAnswerSheets()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                        🔍 Cari
+                    </button>
+                </div>
+
+                <!-- Answer Sheets List -->
+                <div id="answer-sheets-list" class="space-y-4">
+                    <div class="text-center text-gray-500 py-8">
+                        <p>Belum ada data lembar jawab. Silakan isi angket terlebih dahulu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Class Profile Section -->
+        <div id="class-profile-section" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">👥 Profil Kelas</h3>
+                
+                <!-- Class Selection -->
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <select id="profile-grade" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                        <option value="">Pilih Tingkat Kelas</option>
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
+                    </select>
+                    <select id="profile-class" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                        <option value="">Pilih Kelas Spesifik</option>
+                    </select>
+                </div>
+
+                <!-- Class Profile Results -->
+                <div id="class-profile-results" class="hidden">
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg text-center">
+                            <h4 class="text-lg font-semibold text-blue-800 mb-2">Total Siswa</h4>
+                            <p id="class-total-students" class="text-3xl font-bold text-blue-600">0</p>
+                        </div>
+                        <div class="bg-green-50 border border-green-200 p-6 rounded-lg text-center">
+                            <h4 class="text-lg font-semibold text-green-800 mb-2">Sudah Mengisi</h4>
+                            <p id="class-completed" class="text-3xl font-bold text-green-600">0</p>
+                        </div>
+                        <div class="bg-orange-50 border border-orange-200 p-6 rounded-lg text-center">
+                            <h4 class="text-lg font-semibold text-orange-800 mb-2">Belum Mengisi</h4>
+                            <p id="class-pending" class="text-3xl font-bold text-orange-600">0</p>
+                        </div>
+                    </div>
+
+                    <!-- Class Problems Overview -->
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Ringkasan Masalah Kelas</h4>
+                        <div id="class-problems-summary" class="space-y-3">
+                            <!-- Class problems will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Counseling Profile Section -->
+        <div id="counseling-profile-section" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">🎯 Profil Konseling</h3>
+                
+                <!-- Counseling Categories -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-red-50 border border-red-200 p-6 rounded-lg text-center">
+                        <h4 class="text-lg font-semibold text-red-800 mb-2">Prioritas Tinggi</h4>
+                        <p id="high-priority" class="text-3xl font-bold text-red-600">0</p>
+                        <p class="text-sm text-red-600 mt-1">Siswa perlu konseling segera</p>
+                    </div>
+                    <div class="bg-orange-50 border border-orange-200 p-6 rounded-lg text-center">
+                        <h4 class="text-lg font-semibold text-orange-800 mb-2">Prioritas Sedang</h4>
+                        <p id="medium-priority" class="text-3xl font-bold text-orange-600">0</p>
+                        <p class="text-sm text-orange-600 mt-1">Perlu bimbingan berkala</p>
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-lg text-center">
+                        <h4 class="text-lg font-semibold text-yellow-800 mb-2">Prioritas Rendah</h4>
+                        <p id="low-priority" class="text-3xl font-bold text-yellow-600">0</p>
+                        <p class="text-sm text-yellow-600 mt-1">Bimbingan preventif</p>
+                    </div>
+                    <div class="bg-green-50 border border-green-200 p-6 rounded-lg text-center">
+                        <h4 class="text-lg font-semibold text-green-800 mb-2">Kondisi Baik</h4>
+                        <p id="good-condition" class="text-3xl font-bold text-green-600">0</p>
+                        <p class="text-sm text-green-600 mt-1">Tidak perlu konseling khusus</p>
+                    </div>
+                </div>
+
+                <!-- Counseling Recommendations -->
+                <div class="space-y-6">
+                    <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg">
+                        <h4 class="text-lg font-semibold text-blue-800 mb-4">📋 Rekomendasi Program Konseling</h4>
+                        <div id="counseling-recommendations" class="space-y-3">
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">1</span>
+                                <div>
+                                    <p class="font-semibold text-blue-800">Konseling Individual</p>
+                                    <p class="text-blue-700 text-sm">Untuk siswa dengan masalah prioritas tinggi</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">2</span>
+                                <div>
+                                    <p class="font-semibold text-blue-800">Bimbingan Kelompok</p>
+                                    <p class="text-blue-700 text-sm">Untuk masalah yang umum dialami banyak siswa</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <span class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">3</span>
+                                <div>
+                                    <p class="font-semibold text-blue-800">Program Preventif</p>
+                                    <p class="text-blue-700 text-sm">Kegiatan pencegahan untuk seluruh siswa</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students Needing Counseling -->
+                    <div class="bg-red-50 border border-red-200 p-6 rounded-lg">
+                        <h4 class="text-lg font-semibold text-red-800 mb-4">🚨 Siswa yang Memerlukan Konseling Segera</h4>
+                        <div id="urgent-counseling-list" class="space-y-2">
+                            <p class="text-red-600 text-center py-4">Belum ada data yang memerlukan konseling segera</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reports-section" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">📊 Laporan AKPD</h3>
+                
+                <!-- Report Types -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                <span class="text-2xl">📋</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Laporan Lengkap</h4>
+                                <p class="text-sm opacity-90">Semua data siswa</p>
+                            </div>
+                        </div>
+                        <button onclick="downloadCompleteReport()" class="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            📄 Download Laporan
+                        </button>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                <span class="text-2xl">📊</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Laporan Statistik</h4>
+                                <p class="text-sm opacity-90">Analisis per kelas</p>
+                            </div>
+                        </div>
+                        <button onclick="downloadStatisticsReport()" class="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            📈 Download Statistik
+                        </button>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                                <span class="text-2xl">🚨</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold">Laporan Prioritas</h4>
+                                <p class="text-sm opacity-90">Siswa perlu bimbingan</p>
+                            </div>
+                        </div>
+                        <button onclick="downloadPriorityReport()" class="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            ⚠️ Download Prioritas
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Custom Report Generator -->
+                <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">🔧 Generator Laporan Kustom</h4>
+                    <div class="grid md:grid-cols-3 gap-4 mb-4">
+                        <select id="report-grade" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                            <option value="">Semua Tingkat</option>
+                            <option value="7">Kelas 7</option>
+                            <option value="8">Kelas 8</option>
+                            <option value="9">Kelas 9</option>
+                        </select>
+                        <select id="report-class" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                            <option value="">Semua Kelas</option>
+                        </select>
+                        <select id="report-type" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                            <option value="detailed">Laporan Detail</option>
+                            <option value="summary">Laporan Ringkasan</option>
+                            <option value="problems">Masalah Utama</option>
+                        </select>
+                    </div>
+                    <button onclick="generateCustomReport()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+                        🎯 Generate Laporan Kustom
+                    </button>
+                </div>
+
+                <!-- Report Summary -->
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg text-center">
+                        <h5 class="text-sm font-semibold text-blue-800 mb-2">Total Responden</h5>
+                        <p id="report-total-respondents" class="text-2xl font-bold text-blue-600">0</p>
+                    </div>
+                    <div class="bg-green-50 border border-green-200 p-4 rounded-lg text-center">
+                        <h5 class="text-sm font-semibold text-green-800 mb-2">Kelas 7</h5>
+                        <p id="report-grade-7" class="text-2xl font-bold text-green-600">0</p>
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg text-center">
+                        <h5 class="text-sm font-semibold text-yellow-800 mb-2">Kelas 8</h5>
+                        <p id="report-grade-8" class="text-2xl font-bold text-yellow-600">0</p>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-200 p-4 rounded-lg text-center">
+                        <h5 class="text-sm font-semibold text-purple-800 mb-2">Kelas 9</h5>
+                        <p id="report-grade-9" class="text-2xl font-bold text-purple-600">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="text-sm">
+                © 2025 Hak Cipta : <span class="font-semibold">Engkus Kusnandar, CCNA, S.E, Gr</span>
+            </p>
+            <p class="text-xs text-gray-400 mt-1">
+                SMP Negeri 2 Kota Sukabumi - Sistem AKPD Interaktif
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const questionsGrade7 = [
+            "Saya belum bersungguh-sungguh beribadah pada Tuhan YME",
+            "Kadang-kadang perbuatan saya tidak sesuai dengan yang diucapkan",
+            "Saya kadang lupa bersyukur atas nikmat dan karunia dari Tuhan YME",
+            "Saya merasa pernah menyontek pada waktu ulangan",
+            "Saya lebih senang budaya luar (asing) daripada budaya Indonesia",
+            "Saya merasa kurang memiliki rasa tanggung jawab",
+            "Saya gampang marah tanpa tahu penyebabnya",
+            "Saya merasa rendah diri",
+            "Saya merasa malu dengan kondisi fisik (jasmani) yang dimiliki",
+            "Saya merasa kurang mendapatkan perhatian dari orang tua",
+            "Saya belum tahu cara menjaga kesehatan yang baik dan benar",
+            "Saya belum tahu tentang potensi diri saya sendiri",
+            "Saya sering mengalami sakit / alergi",
+            "Saya belum memahami kelebihan dan kekurangan yang saya miliki",
+            "Orang tua saya tidak mempunyai penghasilan tetap",
+            "Saya merasa kesulitan mengatur waktu belajar dan bermain",
+            "Saya belum mengenal jati diri saya yang sebenarnya",
+            "Saya belum tahu perubahan apa saja yang terjadi pada masa remaja",
+            "Saya belum terbiasa disiplin dalam kehidupan",
+            "Saya belum tahu cara menjadi pribadi mandiri",
+            "Pemahaman saya masih sedikit tentang bahaya atau dampak rokok",
+            "Kata maaf, tolong dan terimakasih kadang lupa saya ucapkan dalam pergaulan",
+            "Saya merasa malu untuk berinteraksi dengan para guru dan karyawan di sekolah",
+            "Saya belum banyak mengenal lingkungan sekolah baru saya (guru, fasilitas, prestasi, dll)",
+            "Saya merasa sulit bergaul/kaku dengan teman-teman di sekolah",
+            "Saya ingin menyelesaikan masalah dengan teman bermain",
+            "Saya belum banyak teman atau sahabat",
+            "Saya belum tahu tentang bullying dan cara mensikapinya",
+            "Saya sering lupa waktu ketika bermain/membuka medsos (fb, wa, dll)",
+            "Saya merasa malu jika bergaul dengan teman yang beda jenis kelamin",
+            "Saya jarang bermain/berteman di lingkungan tempat saya tinggal",
+            "Orang tua saya tidak peduli dengan kegiatan belajar saya",
+            "Saya masih kesulitan dalam memahami pelajaran tertentu",
+            "Saya merasa tidak disiplin kalau belajar di rumah sendiri",
+            "Saya belajarnya jika akan ada ulangan atau ujian saja",
+            "Saya belajar di rumah kalau disuruh/diperintah orang tua",
+            "Saya sering menunda-nunda pekerjaan sekolah",
+            "Saya belum tahu cara meraih prestasi di sekolah",
+            "Saya selalu malas untuk belajar",
+            "Saya belum terbiasa belajar kelompok, biasanya saya selalu belajar sendiri",
+            "Saya belum paham cara yang baik belajar di sekolah baru (SMP/MTs)",
+            "Saya belum ada teman yang cocok untuk belajar bersama",
+            "Saya belum tahu cara memperoleh bantuan pendidikan (beasiswa)",
+            "Saya terpaksa harus bekerja untuk mencukupi kebutuhan hidup",
+            "Saya merasa bingung memilih kegiatan ekstrakurikuler di sekolah",
+            "Saya merasa pesimis bisa naik kelas",
+            "Saya belum mempunyai cita-cita yang pasti",
+            "Saya belum banyak tahu tentang jenis-jenis pekerjaan di masyarakat",
+            "Saya belum tahu tentang osis dan kegiatannya",
+            "Saya merasa belum paham hubungan antara hobi, bakat, minat dan kemampuan"
+        ];
+
+        const questionsGrade8 = [
+            "Saya kadang lupa bersyukur atas nikmat dan karunia dari Tuhan YME",
+            "Saya kadang lupa untuk berprilaku sopan dan santun dalam kehidupan",
+            "Saya merasa belum paham etika yang baik dan benar dalam pergaulan teman sebaya",
+            "Saya merasa sulit mematuhi tata tertib di sekolah",
+            "Kadang-kadang saya masih suka menyontek pada waktu ulangan",
+            "Waktu saya banyak dihabiskan untuk bermain game atau games online",
+            "Saya sulit meminta maaf jika melakukan kesalahan terhadap orang lain",
+            "Saya masih merasa belum memiliki rasa percaya diri",
+            "Saya belum tahu cara mengendalikan emosi",
+            "Saya belum tahu cara melakukan eksplorasi bakat secara mandiri",
+            "Saya masih sering mengalami sakit / alergi",
+            "Kondisi keluarga saya sedang tidak harmonis",
+            "Saya sedang mempunyai masalah dengan anggauta keluarga di rumah",
+            "Saya merasa belum bisa menjadi pribadi yang mandiri",
+            "Saya sering lupa waktu ketika bermain/membuka media sosial (fb, wa, instagram, dll)",
+            "Saya merasa sulit mengendalikan ketergantungan dengan handphone",
+            "Saya merasa tidak betah tinggal di rumah sendiri",
+            "Saya merasa tidak pernah di perhatikan dari orang tua",
+            "Kata maaf, tolong dan terimakasih kadang lupa saya ucapkan dalam pergaulan",
+            "Saya belum tahu tentang bentuk-bentuk kenakalan remaja saat ini dan cara mensikapinya",
+            "Saya sering beda pendapat dengan orang lain",
+            "Saya sedang mempunyai masalah dengan teman di sekolah",
+            "Saya belum tahu cara untuk menjaga persahabatan agar tetap langgeng",
+            "Saya belum tahu tentang bullying dan cara mensikapinya",
+            "Saya sukar bergaul dengan teman-teman di sekolah",
+            "Saya merasa masih sedikit pemahaman tentang kesehatan reproduksi remaja",
+            "Saya belum banyak tahu tentang dampak dari pacaran",
+            "Saya malu jika membicarakan masalah seks dan pacar kepada orang tua",
+            "Saya merasa malu jika bergaul dengan teman yang beda jenis kelamin",
+            "Saya merasa takut bertanya atau menjawab di kelas",
+            "Saya belum paham yang harus dilakuan dengan adanya pemanasan global",
+            "Saya belum mengetahui banyak tentang jenis obat-obat terlarang serta dampaknya",
+            "Saya belum tahu cara memilih lembaga bimbingan belajar",
+            "Saya merasa tidak memiliki semangat belajar",
+            "Saya belum tahu cara meraih prestasi di sekolah",
+            "Saya belum paham tentang gaya belajar dan strategi yang sesuai dengannya",
+            "Saya merasa kesulitan dalam memahami pelajaran",
+            "Saya belum terbiasa belajar bersama atau kelompok",
+            "Saya merasa belum menenumkan cara belajar yang efektif",
+            "Saya selalu malas untuk belajar di rumah",
+            "Saya belajarnya jika akan ada ulangan atau ujian saja",
+            "Orang tua kurang peduli dengan kegiatan belajar saya",
+            "Saya belum bisa membuat peta pikiran (mind mapping)",
+            "Saya belum mengenal tentang macam-macam kecerdasan",
+            "Saya belum paham cara kerja otak kiri dan otak kanan",
+            "Saya sering dimarahi orang tua karena boros",
+            "Saya tidak terbiasa menabung",
+            "Saya kurang dapat menyalurkan bakat dan minat di sekolah",
+            "Saya belum tahu tentang prospek karir untuk setiap mapel",
+            "Saya belum banyak tahu tentang jenis-jenis profesi di masyarakat dan Prospeknya"
+        ];
+
+        const questionsGrade9 = [
+            "Saya dalam menjalankan ibadah masih karena terpaksa",
+            "Saya merasa belum memiliki kebiasaan untuk berpikir dan bersikap positif",
+            "Kadang saya masih suka mencontek saat tes",
+            "Saya merasa tertekan (stress) menghadapi kehidupan/kegiatan",
+            "Saya masih sulit mengendalikan emosi",
+            "Saya belum mengenal macam-macam kepribadian manusia",
+            "Saya belum tahu cara menjaga kesehatan agar tetap fit menghadapi waktu ujian",
+            "Saya merasa masih sering membuang sampah tidak pada tempatnya",
+            "Saya jenuh dan enggan masuk sekolah",
+            "Saya meras sulit meninggalkan ketergantungan dengan media sosial (fc, wa, ig, dll)",
+            "Saya merasa sulit menghilangkan kebiasaan keluar malem (bermain,begadang)",
+            "Saya merasa khawatir/takut tidak dapat lulus sekolah",
+            "Saya sedang mempunyai masalah dengan anggota keluarga di rumah",
+            "Saya banyak menghabiskan waktu dengan main game atau games online",
+            "Saya merasa sulit mengendalikan ketergantungan dengan pada handphone",
+            "Saya masih merasa belum memiliki rasa percaya diri",
+            "Saya belum tahu cara menyelesaikan masalah (konflik)",
+            "Saya sering merasa tidak lancar dalam berkomunikasi dengan orang lain",
+            "Saya belum paham pentingnya nilai-nilai kehidupan di masyarakat",
+            "Saya belum memahami tentang etika berlalu lintas",
+            "Saya merasa belum paham tentang kiat sukses hidup bermasyarakat",
+            "Saya belum tahu lebih banyak akibat tawuran di kalangan pelajar",
+            "Saya masih belum bisa menjaga sebuah persahabatan agar tetap langgeng",
+            "Saya merasa sulit untuk antri",
+            "Saya belum tahu tentang bentuk-bentuk kenakalan remaja saat ini dan cara mensikapinya",
+            "Saya belum tahu membuat persahabatan yang baik melalui medsos",
+            "Saya kadang masih lupa mengucapkan kata maaf, tolong dan terimakasih dalam pergaulan",
+            "Saya belum tahu akibat nikah di usia dini",
+            "Saya belum banyak tahu dampak pacaran di kalangan remaja",
+            "Saya belum paham cara meningkatkan motivasi belajar",
+            "Saya belum bisa mengevaluasi hasil prestasi belajar",
+            "Saya belum tahu kiat sukses dalam menghadapi Ujian",
+            "Saya masih belum bisa belajar secara rutin",
+            "Saya masih memiliki kebiasaan belajar apabila akan ada tes/ujian",
+            "Saya belum tahu informasi syarat-syarat kelulusan",
+            "Saya belum paham cara meningkatkan konsentrasi belajar",
+            "Saya merasa kesulitan mempelajari dan memahami mata pelajaran tertentu",
+            "Saya berencana untuk indekos saat melanjutkan ke SLTA tetapi belum tahu cara mengelola keuangan",
+            "Saya mudah putus asa setiap menghadapi kegagalan",
+            "Cita-cita saya tidak sejalan dengan orang tua",
+            "Saya belum mengenal jenis-jenis organisasi di masyarakat",
+            "Saya sulit untuk mengambil keputusan pilihan karir",
+            "Saya masih ragu untuk melanjutkan sekolah ke jenjang SLTA",
+            "Saya belum tahu tentang cara atau strategi masuk sekolah favorit",
+            "Saya belum merencanaan karir masa depan",
+            "Saya kurang berminat memikirkan masa depan",
+            "Saya belum memahami tentang dunia kerja",
+            "Saya masih bingung memikirkan karir setelah lulus SMP/MTs",
+            "Saya belum paham masalah peminatan/jurusan di SMA/MA",
+            "Saya belum paham masalah peminatan/jurusan di SMK/MAK"
+        ];
+
+        let currentGrade = 7;
+        let questions = questionsGrade7;
+
+        let currentQuestion = 0;
+        let answers = {};
+        let studentData = {};
+        let surveyData = []; // Store all survey responses
+
+        // Navigation functions
+        function showSection(sectionName) {
+            // Hide all sections
+            document.getElementById('survey-section').classList.add('hidden');
+            document.getElementById('analysis-section').classList.add('hidden');
+            document.getElementById('answer-sheet-section').classList.add('hidden');
+            document.getElementById('class-profile-section').classList.add('hidden');
+            document.getElementById('counseling-profile-section').classList.add('hidden');
+            document.getElementById('reports-section').classList.add('hidden');
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected section and activate nav button
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            document.getElementById('nav-' + sectionName).classList.add('active');
+            
+            // Initialize section-specific data
+            if (sectionName === 'analysis') {
+                initializeAnalysisSection();
+            } else if (sectionName === 'answer-sheet') {
+                initializeAnswerSheetSection();
+            } else if (sectionName === 'class-profile') {
+                initializeClassProfileSection();
+            } else if (sectionName === 'counseling-profile') {
+                initializeCounselingProfileSection();
+            } else if (sectionName === 'reports') {
+                initializeReportsSection();
+            }
+        }
+
+        // Initialize sections
+        function initializeAnalysisSection() {
+            // Populate class options for analysis
+            const gradeSelect = document.getElementById('analysis-grade');
+            const classSelect = document.getElementById('analysis-class');
+            
+            gradeSelect.addEventListener('change', function() {
+                updateClassOptions('analysis-class', this.value);
+            });
+        }
+
+        function initializeAnswerSheetSection() {
+            // Populate filter options
+            populateFilterOptions();
+            loadAnswerSheets();
+        }
+
+        function initializeClassProfileSection() {
+            const gradeSelect = document.getElementById('profile-grade');
+            gradeSelect.addEventListener('change', function() {
+                updateClassOptions('profile-class', this.value);
+                if (this.value) {
+                    generateClassProfile();
+                }
+            });
+        }
+
+        function initializeCounselingProfileSection() {
+            generateCounselingProfile();
+        }
+
+        function initializeReportsSection() {
+            updateReportSummary();
+            const gradeSelect = document.getElementById('report-grade');
+            gradeSelect.addEventListener('change', function() {
+                updateClassOptions('report-class', this.value);
+            });
+        }
+
+        function updateClassOptions(selectId, grade) {
+            const classSelect = document.getElementById(selectId);
+            classSelect.innerHTML = '<option value="">Pilih Kelas Spesifik</option>';
+            
+            if (grade === '7') {
+                for (let i = 0; i < 9; i++) {
+                    const className = `7${String.fromCharCode(65 + i)}`;
+                    classSelect.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            } else if (grade === '8') {
+                for (let i = 0; i < 11; i++) {
+                    const className = `8${String.fromCharCode(65 + i)}`;
+                    classSelect.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            } else if (grade === '9') {
+                for (let i = 0; i < 10; i++) {
+                    const className = `9${String.fromCharCode(65 + i)}`;
+                    classSelect.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            }
+        }
+
+        // Analysis functions
+        function generateAnalysis() {
+            const grade = document.getElementById('analysis-grade').value;
+            const selectedClass = document.getElementById('analysis-class').value;
+            
+            if (!grade) {
+                alert('Mohon pilih tingkat kelas terlebih dahulu!');
+                return;
+            }
+            
+            // Filter survey data based on selection
+            let filteredData = surveyData.filter(data => {
+                const dataGrade = data.kelas.charAt(0);
+                if (selectedClass) {
+                    return data.kelas === selectedClass;
+                } else {
+                    return dataGrade === grade;
+                }
+            });
+            
+            if (filteredData.length === 0) {
+                alert('Belum ada data untuk kelas yang dipilih!');
+                return;
+            }
+            
+            // Calculate statistics
+            const totalRespondents = filteredData.length;
+            let totalYes = 0;
+            let questionStats = {};
+            
+            filteredData.forEach(data => {
+                Object.values(data.answers).forEach((answer, index) => {
+                    if (answer === 'ya') {
+                        totalYes++;
+                        questionStats[index] = (questionStats[index] || 0) + 1;
+                    }
+                });
+            });
+            
+            const avgYes = Math.round((totalYes / (totalRespondents * 50)) * 100);
+            const highestProblem = Math.max(...Object.values(questionStats)) || 0;
+            const highestProblemPercent = Math.round((highestProblem / totalRespondents) * 100);
+            const needGuidance = filteredData.filter(data => {
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                return yesCount > 25; // More than 50% yes answers
+            }).length;
+            
+            // Update display
+            document.getElementById('total-respondents').textContent = totalRespondents;
+            document.getElementById('avg-yes').textContent = avgYes + '%';
+            document.getElementById('highest-problem').textContent = highestProblemPercent + '%';
+            document.getElementById('need-guidance').textContent = needGuidance;
+            
+            // Show top problems
+            const topProblems = Object.entries(questionStats)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 5);
+            
+            const topProblemsContainer = document.getElementById('top-problems');
+            topProblemsContainer.innerHTML = '';
+            
+            topProblems.forEach(([questionIndex, count], index) => {
+                const percentage = Math.round((count / totalRespondents) * 100);
+                const questionText = getQuestionByGrade(grade)[questionIndex];
+                
+                topProblemsContainer.innerHTML += `
+                    <div class="flex items-start space-x-3 p-3 bg-white rounded-lg border border-red-200">
+                        <span class="bg-red-100 text-red-600 font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm flex-shrink-0 mt-0.5">${index + 1}</span>
+                        <div class="flex-1">
+                            <p class="font-medium text-red-800">${questionText}</p>
+                            <p class="text-sm text-red-600">${count} siswa (${percentage}%)</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('analysis-results').classList.remove('hidden');
+        }
+
+        function getQuestionByGrade(grade) {
+            if (grade === '7') return questionsGrade7;
+            if (grade === '8') return questionsGrade8;
+            if (grade === '9') return questionsGrade9;
+            return questionsGrade7;
+        }
+
+        // Answer sheet functions
+        function populateFilterOptions() {
+            const filterClass = document.getElementById('filter-class');
+            filterClass.innerHTML = '<option value="">Semua Kelas</option>';
+            
+            // Add all possible classes
+            for (let grade = 7; grade <= 9; grade++) {
+                const maxClass = grade === 7 ? 9 : grade === 8 ? 11 : 10;
+                for (let i = 0; i < maxClass; i++) {
+                    const className = `${grade}${String.fromCharCode(65 + i)}`;
+                    filterClass.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            }
+        }
+
+        function loadAnswerSheets() {
+            const container = document.getElementById('answer-sheets-list');
+            
+            if (surveyData.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <p>Belum ada data lembar jawab. Silakan isi angket terlebih dahulu.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            surveyData.forEach((data, index) => {
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                const percentage = Math.round((yesCount / 50) * 100);
+                
+                container.innerHTML += `
+                    <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">${data.nama}</h4>
+                                <p class="text-gray-600">Kelas ${data.kelas}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-500">Jawaban "YA"</p>
+                                <p class="text-2xl font-bold ${percentage > 50 ? 'text-red-600' : 'text-green-600'}">${yesCount}/50</p>
+                                <p class="text-sm ${percentage > 50 ? 'text-red-500' : 'text-green-500'}">${percentage}%</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="viewDetailAnswers(${index})" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                                👁️ Lihat Detail
+                            </button>
+                            <button onclick="downloadIndividualResult(${index})" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                                📄 Download
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function searchAnswerSheets() {
+            const searchTerm = document.getElementById('search-student').value.toLowerCase();
+            const filterClass = document.getElementById('filter-class').value;
+            
+            const container = document.getElementById('answer-sheets-list');
+            container.innerHTML = '';
+            
+            const filteredData = surveyData.filter(data => {
+                const matchesSearch = data.nama.toLowerCase().includes(searchTerm);
+                const matchesClass = !filterClass || data.kelas === filterClass;
+                return matchesSearch && matchesClass;
+            });
+            
+            if (filteredData.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <p>Tidak ada data yang sesuai dengan pencarian.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredData.forEach((data, originalIndex) => {
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                const percentage = Math.round((yesCount / 50) * 100);
+                const actualIndex = surveyData.indexOf(data);
+                
+                container.innerHTML += `
+                    <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800">${data.nama}</h4>
+                                <p class="text-gray-600">Kelas ${data.kelas}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-500">Jawaban "YA"</p>
+                                <p class="text-2xl font-bold ${percentage > 50 ? 'text-red-600' : 'text-green-600'}">${yesCount}/50</p>
+                                <p class="text-sm ${percentage > 50 ? 'text-red-500' : 'text-green-500'}">${percentage}%</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="viewDetailAnswers(${actualIndex})" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                                👁️ Lihat Detail
+                            </button>
+                            <button onclick="downloadIndividualResult(${actualIndex})" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                                📄 Download
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function viewDetailAnswers(index) {
+            const data = surveyData[index];
+            const grade = data.kelas.charAt(0);
+            const questionList = getQuestionByGrade(grade);
+            
+            let detailContent = `
+                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onclick="closeDetailModal()">
+                    <div class="bg-white rounded-xl p-8 max-w-4xl max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-bold text-gray-800">Detail Jawaban - ${data.nama}</h3>
+                            <button onclick="closeDetailModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                        </div>
+                        <div class="space-y-4">
+            `;
+            
+            questionList.forEach((question, qIndex) => {
+                const answer = data.answers[qIndex] || 'Tidak dijawab';
+                const isYes = answer === 'ya';
+                
+                detailContent += `
+                    <div class="p-4 border rounded-lg ${isYes ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'}">
+                        <div class="flex justify-between items-start">
+                            <p class="text-gray-800 flex-1 pr-4">${qIndex + 1}. ${question}</p>
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold ${isYes ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}">
+                                ${answer.toUpperCase()}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            detailContent += `
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', detailContent);
+        }
+
+        function closeDetailModal() {
+            const modal = document.querySelector('.fixed.inset-0');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function downloadIndividualResult(index) {
+            const data = surveyData[index];
+            const grade = data.kelas.charAt(0);
+            const questionList = getQuestionByGrade(grade);
+            const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+            const noCount = Object.values(data.answers).filter(answer => answer === 'tidak').length;
+            
+            let content = `HASIL ANGKET KEBUTUHAN PESERTA DIDIK\n`;
+            content += `SMP NEGERI 2 KOTA SUKABUMI\n`;
+            content += `TAHUN AJARAN 2025/2026\n\n`;
+            content += `Nama: ${data.nama}\n`;
+            content += `Kelas: ${data.kelas}\n`;
+            content += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n\n`;
+            content += `RINGKASAN:\n`;
+            content += `Jawaban "YA": ${yesCount}\n`;
+            content += `Jawaban "TIDAK": ${noCount}\n\n`;
+            content += `DETAIL JAWABAN:\n`;
+            
+            questionList.forEach((question, qIndex) => {
+                content += `${qIndex + 1}. ${question}\n`;
+                content += `   Jawaban: ${(data.answers[qIndex] || 'TIDAK DIJAWAB').toUpperCase()}\n\n`;
+            });
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AKPD_${data.nama}_${data.kelas}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Class profile functions
+        function generateClassProfile() {
+            const grade = document.getElementById('profile-grade').value;
+            const selectedClass = document.getElementById('profile-class').value;
+            
+            if (!grade) return;
+            
+            // Filter data for selected class or grade
+            let filteredData = surveyData.filter(data => {
+                if (selectedClass) {
+                    return data.kelas === selectedClass;
+                } else {
+                    return data.kelas.charAt(0) === grade;
+                }
+            });
+            
+            // For demo purposes, assume each class has 30 students
+            const totalStudents = 30;
+            const completed = filteredData.length;
+            const pending = totalStudents - completed;
+            
+            document.getElementById('class-total-students').textContent = totalStudents;
+            document.getElementById('class-completed').textContent = completed;
+            document.getElementById('class-pending').textContent = pending;
+            
+            // Generate class problems summary
+            const problemsSummary = document.getElementById('class-problems-summary');
+            if (filteredData.length > 0) {
+                let questionStats = {};
+                const questionList = getQuestionByGrade(grade);
+                
+                filteredData.forEach(data => {
+                    Object.entries(data.answers).forEach(([index, answer]) => {
+                        if (answer === 'ya') {
+                            questionStats[index] = (questionStats[index] || 0) + 1;
+                        }
+                    });
+                });
+                
+                const topProblems = Object.entries(questionStats)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 3);
+                
+                problemsSummary.innerHTML = '';
+                topProblems.forEach(([questionIndex, count], index) => {
+                    const percentage = Math.round((count / completed) * 100);
+                    const questionText = questionList[questionIndex];
+                    
+                    problemsSummary.innerHTML += `
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg border">
+                            <p class="text-gray-800 flex-1 pr-4">${questionText}</p>
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">
+                                ${count} siswa (${percentage}%)
+                            </span>
+                        </div>
+                    `;
+                });
+            } else {
+                problemsSummary.innerHTML = '<p class="text-gray-500 text-center py-4">Belum ada data untuk ditampilkan</p>';
+            }
+            
+            document.getElementById('class-profile-results').classList.remove('hidden');
+        }
+
+        // Counseling profile functions
+        function generateCounselingProfile() {
+            if (surveyData.length === 0) {
+                document.getElementById('high-priority').textContent = '0';
+                document.getElementById('medium-priority').textContent = '0';
+                document.getElementById('low-priority').textContent = '0';
+                document.getElementById('good-condition').textContent = '0';
+                return;
+            }
+            
+            let highPriority = 0;
+            let mediumPriority = 0;
+            let lowPriority = 0;
+            let goodCondition = 0;
+            let urgentStudents = [];
+            
+            surveyData.forEach(data => {
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                const percentage = (yesCount / 50) * 100;
+                
+                if (percentage >= 70) {
+                    highPriority++;
+                    urgentStudents.push(data);
+                } else if (percentage >= 50) {
+                    mediumPriority++;
+                } else if (percentage >= 30) {
+                    lowPriority++;
+                } else {
+                    goodCondition++;
+                }
+            });
+            
+            document.getElementById('high-priority').textContent = highPriority;
+            document.getElementById('medium-priority').textContent = mediumPriority;
+            document.getElementById('low-priority').textContent = lowPriority;
+            document.getElementById('good-condition').textContent = goodCondition;
+            
+            // Update urgent counseling list
+            const urgentList = document.getElementById('urgent-counseling-list');
+            if (urgentStudents.length > 0) {
+                urgentList.innerHTML = '';
+                urgentStudents.forEach(student => {
+                    const yesCount = Object.values(student.answers).filter(answer => answer === 'ya').length;
+                    const percentage = Math.round((yesCount / 50) * 100);
+                    
+                    urgentList.innerHTML += `
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-red-200">
+                            <div>
+                                <p class="font-semibold text-red-800">${student.nama}</p>
+                                <p class="text-sm text-red-600">Kelas ${student.kelas}</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">
+                                ${yesCount}/50 (${percentage}%)
+                            </span>
+                        </div>
+                    `;
+                });
+            } else {
+                urgentList.innerHTML = '<p class="text-red-600 text-center py-4">Belum ada data yang memerlukan konseling segera</p>';
+            }
+        }
+
+        // Report functions
+        function updateReportSummary() {
+            const totalRespondents = surveyData.length;
+            const grade7Count = surveyData.filter(data => data.kelas.charAt(0) === '7').length;
+            const grade8Count = surveyData.filter(data => data.kelas.charAt(0) === '8').length;
+            const grade9Count = surveyData.filter(data => data.kelas.charAt(0) === '9').length;
+            
+            document.getElementById('report-total-respondents').textContent = totalRespondents;
+            document.getElementById('report-grade-7').textContent = grade7Count;
+            document.getElementById('report-grade-8').textContent = grade8Count;
+            document.getElementById('report-grade-9').textContent = grade9Count;
+        }
+
+        function downloadCompleteReport() {
+            if (surveyData.length === 0) {
+                alert('Belum ada data untuk diunduh!');
+                return;
+            }
+            
+            let content = `LAPORAN LENGKAP ANGKET KEBUTUHAN PESERTA DIDIK\n`;
+            content += `SMP NEGERI 2 KOTA SUKABUMI\n`;
+            content += `TAHUN AJARAN 2025/2026\n`;
+            content += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n`;
+            content += `Total Responden: ${surveyData.length}\n\n`;
+            content += `${'='.repeat(80)}\n\n`;
+            
+            surveyData.forEach((data, index) => {
+                const grade = data.kelas.charAt(0);
+                const questionList = getQuestionByGrade(grade);
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                const noCount = Object.values(data.answers).filter(answer => answer === 'tidak').length;
+                const percentage = Math.round((yesCount / 50) * 100);
+                
+                content += `RESPONDEN ${index + 1}\n`;
+                content += `Nama: ${data.nama}\n`;
+                content += `Kelas: ${data.kelas}\n`;
+                content += `Jawaban "YA": ${yesCount} (${percentage}%)\n`;
+                content += `Jawaban "TIDAK": ${noCount}\n`;
+                content += `Status: ${percentage > 50 ? 'PERLU BIMBINGAN' : 'KONDISI BAIK'}\n\n`;
+                
+                content += `DETAIL JAWABAN:\n`;
+                questionList.forEach((question, qIndex) => {
+                    const answer = data.answers[qIndex] || 'TIDAK DIJAWAB';
+                    content += `${qIndex + 1}. ${question}\n`;
+                    content += `   Jawaban: ${answer.toUpperCase()}\n\n`;
+                });
+                
+                content += `${'-'.repeat(60)}\n\n`;
+            });
+            
+            content += `\nHak Cipta : Engkus Kusnandar, CCNA, S.E, Gr\n`;
+            content += `SMP Negeri 2 Kota Sukabumi - Sistem AKPD Interaktif\n`;
+            
+            downloadFile(content, `Laporan_Lengkap_AKPD_${new Date().toISOString().split('T')[0]}.txt`);
+        }
+
+        function downloadStatisticsReport() {
+            if (surveyData.length === 0) {
+                alert('Belum ada data untuk diunduh!');
+                return;
+            }
+            
+            let content = `LAPORAN STATISTIK ANGKET KEBUTUHAN PESERTA DIDIK\n`;
+            content += `SMP NEGERI 2 KOTA SUKABUMI\n`;
+            content += `TAHUN AJARAN 2025/2026\n`;
+            content += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n\n`;
+            content += `${'='.repeat(80)}\n\n`;
+            
+            // Overall statistics
+            const totalRespondents = surveyData.length;
+            const grade7Count = surveyData.filter(data => data.kelas.charAt(0) === '7').length;
+            const grade8Count = surveyData.filter(data => data.kelas.charAt(0) === '8').length;
+            const grade9Count = surveyData.filter(data => data.kelas.charAt(0) === '9').length;
+            
+            content += `STATISTIK UMUM:\n`;
+            content += `Total Responden: ${totalRespondents}\n`;
+            content += `Kelas 7: ${grade7Count} siswa (${Math.round((grade7Count/totalRespondents)*100)}%)\n`;
+            content += `Kelas 8: ${grade8Count} siswa (${Math.round((grade8Count/totalRespondents)*100)}%)\n`;
+            content += `Kelas 9: ${grade9Count} siswa (${Math.round((grade9Count/totalRespondents)*100)}%)\n\n`;
+            
+            // Priority analysis
+            let highPriority = 0, mediumPriority = 0, lowPriority = 0, goodCondition = 0;
+            surveyData.forEach(data => {
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                const percentage = (yesCount / 50) * 100;
+                
+                if (percentage >= 70) highPriority++;
+                else if (percentage >= 50) mediumPriority++;
+                else if (percentage >= 30) lowPriority++;
+                else goodCondition++;
+            });
+            
+            content += `ANALISIS PRIORITAS BIMBINGAN:\n`;
+            content += `Prioritas Tinggi (≥70%): ${highPriority} siswa\n`;
+            content += `Prioritas Sedang (50-69%): ${mediumPriority} siswa\n`;
+            content += `Prioritas Rendah (30-49%): ${lowPriority} siswa\n`;
+            content += `Kondisi Baik (<30%): ${goodCondition} siswa\n\n`;
+            
+            // Top problems analysis
+            for (let grade = 7; grade <= 9; grade++) {
+                const gradeData = surveyData.filter(data => data.kelas.charAt(0) === grade.toString());
+                if (gradeData.length === 0) continue;
+                
+                const questionList = getQuestionByGrade(grade.toString());
+                let questionStats = {};
+                
+                gradeData.forEach(data => {
+                    Object.entries(data.answers).forEach(([index, answer]) => {
+                        if (answer === 'ya') {
+                            questionStats[index] = (questionStats[index] || 0) + 1;
+                        }
+                    });
+                });
+                
+                const topProblems = Object.entries(questionStats)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 5);
+                
+                content += `MASALAH UTAMA KELAS ${grade} (${gradeData.length} responden):\n`;
+                topProblems.forEach(([questionIndex, count], index) => {
+                    const percentage = Math.round((count / gradeData.length) * 100);
+                    const questionText = questionList[questionIndex];
+                    content += `${index + 1}. ${questionText}\n`;
+                    content += `   ${count} siswa (${percentage}%)\n\n`;
+                });
+                content += `${'-'.repeat(60)}\n\n`;
+            }
+            
+            content += `\nHak Cipta : Engkus Kusnandar, CCNA, S.E, Gr\n`;
+            content += `SMP Negeri 2 Kota Sukabumi - Sistem AKPD Interaktif\n`;
+            
+            downloadFile(content, `Laporan_Statistik_AKPD_${new Date().toISOString().split('T')[0]}.txt`);
+        }
+
+        function downloadPriorityReport() {
+            if (surveyData.length === 0) {
+                alert('Belum ada data untuk diunduh!');
+                return;
+            }
+            
+            const priorityStudents = surveyData.filter(data => {
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                return (yesCount / 50) * 100 >= 50; // 50% or more "ya" answers
+            }).sort((a, b) => {
+                const aYes = Object.values(a.answers).filter(answer => answer === 'ya').length;
+                const bYes = Object.values(b.answers).filter(answer => answer === 'ya').length;
+                return bYes - aYes; // Sort by highest priority first
+            });
+            
+            if (priorityStudents.length === 0) {
+                alert('Tidak ada siswa yang memerlukan bimbingan prioritas!');
+                return;
+            }
+            
+            let content = `LAPORAN PRIORITAS BIMBINGAN AKPD\n`;
+            content += `SMP NEGERI 2 KOTA SUKABUMI\n`;
+            content += `TAHUN AJARAN 2025/2026\n`;
+            content += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n`;
+            content += `Total Siswa Perlu Bimbingan: ${priorityStudents.length}\n\n`;
+            content += `${'='.repeat(80)}\n\n`;
+            
+            priorityStudents.forEach((data, index) => {
+                const grade = data.kelas.charAt(0);
+                const questionList = getQuestionByGrade(grade);
+                const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                const percentage = Math.round((yesCount / 50) * 100);
+                
+                let priority = 'RENDAH';
+                if (percentage >= 70) priority = 'TINGGI';
+                else if (percentage >= 50) priority = 'SEDANG';
+                
+                content += `${index + 1}. SISWA PRIORITAS ${priority}\n`;
+                content += `Nama: ${data.nama}\n`;
+                content += `Kelas: ${data.kelas}\n`;
+                content += `Skor Masalah: ${yesCount}/50 (${percentage}%)\n\n`;
+                
+                // Show top problems for this student
+                const studentProblems = [];
+                Object.entries(data.answers).forEach(([qIndex, answer]) => {
+                    if (answer === 'ya') {
+                        studentProblems.push({
+                            index: qIndex,
+                            question: questionList[qIndex]
+                        });
+                    }
+                });
+                
+                content += `MASALAH YANG DIALAMI:\n`;
+                studentProblems.forEach((problem, pIndex) => {
+                    content += `- ${problem.question}\n`;
+                });
+                
+                content += `\nREKOMENDASI TINDAKAN:\n`;
+                if (percentage >= 70) {
+                    content += `- Konseling individual segera\n`;
+                    content += `- Koordinasi dengan orang tua\n`;
+                    content += `- Monitoring intensif\n`;
+                } else if (percentage >= 50) {
+                    content += `- Bimbingan kelompok\n`;
+                    content += `- Konseling berkala\n`;
+                    content += `- Program pengembangan diri\n`;
+                }
+                
+                content += `\n${'-'.repeat(60)}\n\n`;
+            });
+            
+            content += `\nHak Cipta : Engkus Kusnandar, CCNA, S.E, Gr\n`;
+            content += `SMP Negeri 2 Kota Sukabumi - Sistem AKPD Interaktif\n`;
+            
+            downloadFile(content, `Laporan_Prioritas_AKPD_${new Date().toISOString().split('T')[0]}.txt`);
+        }
+
+        function generateCustomReport() {
+            const grade = document.getElementById('report-grade').value;
+            const selectedClass = document.getElementById('report-class').value;
+            const reportType = document.getElementById('report-type').value;
+            
+            let filteredData = surveyData;
+            
+            // Filter by grade/class
+            if (selectedClass) {
+                filteredData = surveyData.filter(data => data.kelas === selectedClass);
+            } else if (grade) {
+                filteredData = surveyData.filter(data => data.kelas.charAt(0) === grade);
+            }
+            
+            if (filteredData.length === 0) {
+                alert('Tidak ada data untuk filter yang dipilih!');
+                return;
+            }
+            
+            let content = `LAPORAN KUSTOM AKPD\n`;
+            content += `SMP NEGERI 2 KOTA SUKABUMI\n`;
+            content += `TAHUN AJARAN 2025/2026\n`;
+            content += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n`;
+            content += `Filter: ${selectedClass || (grade ? `Kelas ${grade}` : 'Semua Kelas')}\n`;
+            content += `Jenis Laporan: ${reportType === 'detailed' ? 'Detail' : reportType === 'summary' ? 'Ringkasan' : 'Masalah Utama'}\n`;
+            content += `Total Data: ${filteredData.length}\n\n`;
+            content += `${'='.repeat(80)}\n\n`;
+            
+            if (reportType === 'detailed') {
+                // Detailed report similar to complete report but filtered
+                filteredData.forEach((data, index) => {
+                    const dataGrade = data.kelas.charAt(0);
+                    const questionList = getQuestionByGrade(dataGrade);
+                    const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                    const percentage = Math.round((yesCount / 50) * 100);
+                    
+                    content += `SISWA ${index + 1}\n`;
+                    content += `Nama: ${data.nama}\n`;
+                    content += `Kelas: ${data.kelas}\n`;
+                    content += `Skor: ${yesCount}/50 (${percentage}%)\n\n`;
+                    
+                    // Show only "ya" answers for brevity
+                    const problems = [];
+                    Object.entries(data.answers).forEach(([qIndex, answer]) => {
+                        if (answer === 'ya') {
+                            problems.push(questionList[qIndex]);
+                        }
+                    });
+                    
+                    content += `MASALAH YANG DIALAMI (${problems.length}):\n`;
+                    problems.forEach((problem, pIndex) => {
+                        content += `${pIndex + 1}. ${problem}\n`;
+                    });
+                    
+                    content += `\n${'-'.repeat(60)}\n\n`;
+                });
+            } else if (reportType === 'summary') {
+                // Summary statistics
+                const totalYes = filteredData.reduce((sum, data) => {
+                    return sum + Object.values(data.answers).filter(answer => answer === 'ya').length;
+                }, 0);
+                const avgYes = Math.round((totalYes / (filteredData.length * 50)) * 100);
+                
+                content += `RINGKASAN STATISTIK:\n`;
+                content += `Rata-rata jawaban "YA": ${avgYes}%\n`;
+                content += `Total masalah teridentifikasi: ${totalYes}\n\n`;
+                
+                // Priority breakdown
+                let priorities = { tinggi: 0, sedang: 0, rendah: 0, baik: 0 };
+                filteredData.forEach(data => {
+                    const yesCount = Object.values(data.answers).filter(answer => answer === 'ya').length;
+                    const percentage = (yesCount / 50) * 100;
+                    
+                    if (percentage >= 70) priorities.tinggi++;
+                    else if (percentage >= 50) priorities.sedang++;
+                    else if (percentage >= 30) priorities.rendah++;
+                    else priorities.baik++;
+                });
+                
+                content += `DISTRIBUSI PRIORITAS:\n`;
+                content += `Prioritas Tinggi: ${priorities.tinggi} siswa\n`;
+                content += `Prioritas Sedang: ${priorities.sedang} siswa\n`;
+                content += `Prioritas Rendah: ${priorities.rendah} siswa\n`;
+                content += `Kondisi Baik: ${priorities.baik} siswa\n\n`;
+            } else if (reportType === 'problems') {
+                // Top problems analysis
+                const questionList = getQuestionByGrade(grade || '7'); // Default to grade 7 if mixed
+                let questionStats = {};
+                
+                filteredData.forEach(data => {
+                    Object.entries(data.answers).forEach(([index, answer]) => {
+                        if (answer === 'ya') {
+                            questionStats[index] = (questionStats[index] || 0) + 1;
+                        }
+                    });
+                });
+                
+                const topProblems = Object.entries(questionStats)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 10);
+                
+                content += `10 MASALAH TERATAS:\n`;
+                topProblems.forEach(([questionIndex, count], index) => {
+                    const percentage = Math.round((count / filteredData.length) * 100);
+                    const questionText = questionList[questionIndex];
+                    content += `${index + 1}. ${questionText}\n`;
+                    content += `   ${count} siswa (${percentage}%)\n\n`;
+                });
+            }
+            
+            content += `\nHak Cipta : Engkus Kusnandar, CCNA, S.E, Gr\n`;
+            content += `SMP Negeri 2 Kota Sukabumi - Sistem AKPD Interaktif\n`;
+            
+            const fileName = `Laporan_Kustom_${reportType}_${selectedClass || (grade ? `Kelas${grade}` : 'Semua')}_${new Date().toISOString().split('T')[0]}.txt`;
+            downloadFile(content, fileName);
+        }
+
+        function downloadFile(content, filename) {
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('survey');
+        });
+
+        function selectGrade(grade) {
+            currentGrade = grade;
+            if (grade === 7) {
+                questions = questionsGrade7;
+            } else if (grade === 8) {
+                questions = questionsGrade8;
+            } else {
+                questions = questionsGrade9;
+            }
+            
+            // Update class options
+            const kelasSelect = document.getElementById('kelas');
+            kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>';
+            
+            if (grade === 7) {
+                for (let i = 0; i < 9; i++) {
+                    const className = `7${String.fromCharCode(65 + i)}`;
+                    kelasSelect.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            } else if (grade === 8) {
+                for (let i = 0; i < 11; i++) {
+                    const className = `8${String.fromCharCode(65 + i)}`;
+                    kelasSelect.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            } else {
+                for (let i = 0; i < 10; i++) {
+                    const className = `9${String.fromCharCode(65 + i)}`;
+                    kelasSelect.innerHTML += `<option value="${className}">${className}</option>`;
+                }
+            }
+            
+            document.getElementById('class-selection').classList.add('hidden');
+            document.getElementById('identitas-section').classList.remove('hidden');
+        }
+
+        function backToClassSelection() {
+            document.getElementById('identitas-section').classList.add('hidden');
+            document.getElementById('class-selection').classList.remove('hidden');
+            
+            // Reset form
+            document.getElementById('nama').value = '';
+            document.getElementById('kelas').value = '';
+        }
+
+        function startSurvey() {
+            const nama = document.getElementById('nama').value.trim();
+            const kelas = document.getElementById('kelas').value;
+            
+            if (!nama || !kelas) {
+                alert('Mohon lengkapi nama dan kelas terlebih dahulu!');
+                return;
+            }
+            
+            studentData = { nama, kelas };
+            document.getElementById('identitas-section').classList.add('hidden');
+            document.getElementById('petunjuk-section').classList.remove('hidden');
+        }
+
+        function showQuestions() {
+            document.getElementById('petunjuk-section').classList.add('hidden');
+            document.getElementById('progress-section').classList.remove('hidden');
+            document.getElementById('questions-section').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById('questions-container');
+            const question = questions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="bg-white rounded-xl shadow-lg p-8 question-card fade-in">
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-blue-100 text-blue-600 font-bold px-3 py-1 rounded-full text-sm">
+                                Pertanyaan ${currentQuestion + 1}
+                            </span>
+                            <span class="text-gray-500 text-sm">${Math.round(((currentQuestion + 1) / questions.length) * 100)}%</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 leading-relaxed">${question}</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <label class="flex items-center space-x-4 p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 hover:bg-blue-50 transition-all">
+                            <input type="radio" name="answer" value="ya" class="radio-custom" ${answers[currentQuestion] === 'ya' ? 'checked' : ''} onchange="saveAnswer('ya')">
+                            <span class="text-lg font-medium text-gray-700">YA</span>
+                        </label>
+                        <label class="flex items-center space-x-4 p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-300 hover:bg-blue-50 transition-all">
+                            <input type="radio" name="answer" value="tidak" class="radio-custom" ${answers[currentQuestion] === 'tidak' ? 'checked' : ''} onchange="saveAnswer('tidak')">
+                            <span class="text-lg font-medium text-gray-700">TIDAK</span>
+                        </label>
+                    </div>
+                </div>
+            `;
+            
+            updateProgress();
+            updateNavigation();
+        }
+
+        function saveAnswer(answer) {
+            answers[currentQuestion] = answer;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const answered = Object.keys(answers).length;
+            const percentage = (answered / questions.length) * 100;
+            
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `${answered}/${questions.length}`;
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const counter = document.getElementById('question-counter');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            counter.textContent = `${currentQuestion + 1} dari ${questions.length}`;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Selesai ✓';
+                nextBtn.onclick = finishSurvey;
+            } else {
+                nextBtn.textContent = 'Selanjutnya →';
+                nextBtn.onclick = nextQuestion;
+            }
+        }
+
+        function nextQuestion() {
+            if (!answers[currentQuestion]) {
+                alert('Mohon pilih jawaban terlebih dahulu!');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function finishSurvey() {
+            if (!answers[currentQuestion]) {
+                alert('Mohon pilih jawaban terlebih dahulu!');
+                return;
+            }
+            
+            document.getElementById('questions-section').classList.add('hidden');
+            document.getElementById('progress-section').classList.add('hidden');
+            showResults();
+        }
+
+        function showResults() {
+            const yaCount = Object.values(answers).filter(answer => answer === 'ya').length;
+            const tidakCount = Object.values(answers).filter(answer => answer === 'tidak').length;
+            
+            // Save survey data
+            const surveyResponse = {
+                nama: studentData.nama,
+                kelas: studentData.kelas,
+                answers: {...answers},
+                timestamp: new Date().toISOString(),
+                yaCount: yaCount,
+                tidakCount: tidakCount
+            };
+            
+            surveyData.push(surveyResponse);
+            
+            const summaryContent = document.getElementById('summary-content');
+            summaryContent.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-lg border">
+                        <p class="text-sm text-gray-600">Nama Siswa</p>
+                        <p class="font-semibold text-gray-800">${studentData.nama}</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border">
+                        <p class="text-sm text-gray-600">Kelas</p>
+                        <p class="font-semibold text-gray-800">${studentData.kelas}</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <p class="text-sm text-green-600">Jawaban "YA"</p>
+                        <p class="font-bold text-2xl text-green-700">${yaCount}</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <p class="text-sm text-blue-600">Jawaban "TIDAK"</p>
+                        <p class="font-bold text-2xl text-blue-700">${tidakCount}</p>
+                    </div>
+                </div>
+                <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p class="text-sm text-yellow-700">
+                        <strong>Catatan:</strong> Hasil ini akan membantu guru BK dalam memberikan bimbingan yang sesuai dengan kebutuhan Anda.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('results-section').classList.remove('hidden');
+        }
+
+        function downloadResults() {
+            const yaCount = Object.values(answers).filter(answer => answer === 'ya').length;
+            const tidakCount = Object.values(answers).filter(answer => answer === 'tidak').length;
+            
+            let content = `HASIL ANGKET KEBUTUHAN PESERTA DIDIK\n`;
+            content += `SMP NEGERI 2 KOTA SUKABUMI\n`;
+            content += `TAHUN AJARAN 2025/2026\n`;
+            content += `KELAS ${currentGrade}\n\n`;
+            content += `Nama: ${studentData.nama}\n`;
+            content += `Kelas: ${studentData.kelas}\n`;
+            content += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n\n`;
+            content += `RINGKASAN:\n`;
+            content += `Jawaban "YA": ${yaCount}\n`;
+            content += `Jawaban "TIDAK": ${tidakCount}\n\n`;
+            content += `DETAIL JAWABAN:\n`;
+            
+            questions.forEach((question, index) => {
+                content += `${index + 1}. ${question}\n`;
+                content += `   Jawaban: ${answers[index] ? answers[index].toUpperCase() : 'TIDAK DIJAWAB'}\n\n`;
+            });
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AKPD_${studentData.nama}_${studentData.kelas}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function resetSurvey() {
+            if (confirm('Apakah Anda yakin ingin mengisi ulang angket? Semua jawaban akan dihapus.')) {
+                currentQuestion = 0;
+                answers = {};
+                studentData = {};
+                currentGrade = 7;
+                questions = questionsGrade7;
+                
+                document.getElementById('nama').value = '';
+                document.getElementById('kelas').value = '';
+                
+                document.getElementById('results-section').classList.add('hidden');
+                document.getElementById('class-selection').classList.remove('hidden');
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'969566c65270df69',t:'MTc1NDIxOTc3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
